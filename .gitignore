@@ -1,0 +1,4 @@
+/venv/
+/python manage.py --help.txt
+/geekshop/.idea
+/geekshop/db.sqlite3
