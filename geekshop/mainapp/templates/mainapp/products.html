@@ -63,7 +63,7 @@
                         <div class="card h-100">
                             <a href="#">
                                 <img class="card-img-top"
-                                     src="{% static  product.img_url %}"
+                                     src="{{ product.image.url }}"
                                     alt="">
                             </a>
                             <div class="card-body">
@@ -71,7 +71,7 @@
                                     <a href="#">{{ product.name }}</a>
                                 </h4>
                                 <h5>{{ product.price }} руб.</h5>
-                                <p class="card-text">{{ product.mini_desc }}</p>
+                                <p class="card-text">{{ product.description }}</p>
                             </div>
                             <div class="card-footer text-center">
                                 <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
@@ -80,26 +80,6 @@
                     </div>
 
                 {% endfor %}
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#">
-                            <img class="card-img-top"
-                                 src="{% static '/vendor/img/products/Dark-blue-wide-leg-ASOs-DESIGN-trousers.png' %}"
-                                 alt="">
-                        </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Темно-синие широкие строгие брюки ASOS DESIGN</a>
-                            </h4>
-                            <h5>2 890,00 руб.</h5>
-                            <p class="card-text">Легкая эластичная ткань сирсакер Фактурная ткань.</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-danger">Удалить из корзины</button>
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
