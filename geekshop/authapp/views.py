@@ -62,3 +62,8 @@ def register(request):
         'form': form
     }
     return render(request, 'authapp/register.html', context)
+
+
+def logout(request):
+    auth.logout(request)
+    return render(request, 'mainapp\index.html')
