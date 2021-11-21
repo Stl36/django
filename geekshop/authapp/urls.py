@@ -1,6 +1,4 @@
-
 from django.urls import path
-
 
 # from authapp.views import
 
@@ -10,4 +8,3 @@ urlpatterns = [
 
     # path('', products, name='authapp'),
 ]
-
