@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm
+from baskets.models import Basket
 
 
 def login(request):
@@ -80,6 +81,7 @@ def profile(request):
     context = {
         'title': 'Geeshop | Профиль',
         'form' : UserProfilerForm(instance=request.user),
+        'basket': Basket.objects.filter(user=request.user)
     }
     return render(request, 'authapp/profile.html', context)
 
