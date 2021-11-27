@@ -18,16 +18,17 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('mainapp:products'))
-        else:
-            form = UserLoginForm()
-            context = {
-                'title': 'GeekShop | Авторизация',
-                'form': form,
-                'alert': True,
-            }
+        # else:
+        #     # print(form.errors)
+        #     form = UserLoginForm()
+        #     context = {
+        #         'title': 'GeekShop | Авторизация',
+        #         'form': form,
+        #         'alert': True,
+        #     }
 
             return render(request, 'authapp/login.html', context)
-            # print(form.errors)
+
     else:
         form = UserLoginForm()
 
