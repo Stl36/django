@@ -3,11 +3,16 @@
 {% block content %}
 
     <div class="col-lg-7">
-        {% if alert == True %}
+        {% if form.errors %}
 
             <div class="alert alert-warning alert-dismissible fade show" role="alert"
                  style="margin-top: 50px;">
-                <strong>Святой гуакамоле!</strong> Вам следует проверить некоторые из этих полей ниже.
+
+{#                <strong>Святой гуакамоле!</strong> Вам следует проверить некоторые из этих полей ниже.#}
+                {% for error in form.errors %}
+                    {{ error | escape }}
+                {% endfor %}
+
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
