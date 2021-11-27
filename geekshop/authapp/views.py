@@ -71,7 +71,7 @@ def profile(request):
 
     context = {
         'title': 'Geeshop | Профиль',
-        'form' : UserProfilerForm(),
+        'form' : UserProfilerForm(instance=request.user),
     }
     return render(request, 'authapp/profile.html', context)
 
