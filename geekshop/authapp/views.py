@@ -26,8 +26,8 @@ def login(request):
             #         'form': form,
             #         'alert': True,
             #     }
-
-            return render(request, 'authapp/login.html', context)
+            #
+            # return render(request, 'authapp/login.html', context)
 
     else:
         form = UserLoginForm()
