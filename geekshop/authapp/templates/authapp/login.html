@@ -4,15 +4,22 @@
 
     <div class="col-lg-5">
 
-        {% if form.non_field_errors %}
+        {% if form.non_field_errors or messages %}
 
-            <div class="alert alert-warning alert-dismissible fade show" role="alert"
+            <div class="alert {% if messages %} alert-success {% else %}alert-warning {% endif %} alert-dismissible fade show" role="alert"
                  style="margin-top: 50px;">
 
-                {#                <strong>Святой гуакамоле!</strong> Вам следует проверить некоторые из этих полей ниже.#}
-                {% for error in form.non_field_errors %}
-                    {{ error }}
-                {% endfor %}
+                {% if messages %}
+                    {% for mes in messages %}
+                        {{ mes }}
+                    {% endfor %}
+
+                {% else %}
+                    {# <strong>Святой гуакамоле!</strong> Вам следует проверить некоторые из этих полей ниже.#}
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
 
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
