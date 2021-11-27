@@ -67,6 +67,13 @@ def register(request):
     return render(request, 'authapp/register.html', context)
 
 
+def profile(request):
+
+    context = {
+        'title': 'Geeshop | Профиль'
+    }
+    return render(request, 'authapp/profile.html', context)
+
 def logout(request):
     auth.logout(request)
     return render(request, 'mainapp\index.html')
