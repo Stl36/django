@@ -16,19 +16,13 @@
 
                 {% if messages %}
 
-                    <div class="alert {% if messages.success %} alert-success {% else %}alert-warning {% endif %} alert-dismissible fade show"
+                    <div class="alert {% if messages.level == 25 %} alert-success {% else %}alert-warning {% endif %} alert-dismissible fade show"
                          role="alert"
                          style="margin-top: 50px;">
 
                         {% if messages %}
                             {% for mes in messages %}
                                 {{ mes }}
-                            {% endfor %}
-
-                        {% else %}
-                            {# <strong>Святой гуакамоле!</strong> Вам следует проверить некоторые из этих полей ниже.#}
-                            {% for error in form.errors %}
-                                {{ error }}
                             {% endfor %}
                         {% endif %}
 

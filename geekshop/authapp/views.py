@@ -73,10 +73,12 @@ def register(request):
 def profile(request):
     if request.method == 'POST':
         form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
-        if form.is_valid():  # даже с некорректными данными проверка успешна. Почему?
+        if form.is_valid():
+            messages.set_level(request, messages.SUCCESS)
             messages.success(request, 'Профиль обновлен')
             form.save()
         else:
+            messages.set_level(request, messages.ERROR)
             messages.error(request, form.errors)
 
     context = {
