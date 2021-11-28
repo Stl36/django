@@ -74,12 +74,10 @@ def profile(request):
     if request.method == 'POST':
         form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():  # даже с некорректными данными проверка успешна. Почему?
-            form.save()
             messages.success(request, 'Профиль обновлен')
-            return HttpResponseRedirect(reverse('authapp:profile'))
-        # else:
-        #     print(form.errors)
-
+            form.save()
+        else:
+            messages.error(request,form.errors)
 
     context = {
         'title': 'Geeshop | Профиль',

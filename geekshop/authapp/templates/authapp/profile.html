@@ -14,9 +14,9 @@
 
             <div class="col-lg-7">
 
-                {% if form.errors or messages %}
+                {% if messages %}
 
-                    <div class="alert {% if messages %} alert-success {% else %}alert-warning {% endif %} alert-dismissible fade show"
+                    <div class="alert {% if messages.success %} alert-success {% else %}alert-warning {% endif %} alert-dismissible fade show"
                          role="alert"
                          style="margin-top: 50px;">
 
