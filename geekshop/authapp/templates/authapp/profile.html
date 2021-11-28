@@ -20,14 +20,14 @@
                          role="alert"
                          style="margin-top: 50px;">
 
-                        {% if messages %}
+                        {% if messages.success %}
                             {% for mes in messages %}
                                 {{ mes }}
                             {% endfor %}
 
                         {% else %}
                             {# <strong>Святой гуакамоле!</strong> Вам следует проверить некоторые из этих полей ниже.#}
-                            {% for error in form.errors %}
+                            {% for error in messages.errors %}
                                 {{ error }}
                             {% endfor %}
                         {% endif %}
