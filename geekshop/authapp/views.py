@@ -46,7 +46,7 @@ def register(request):
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request,'Вы успешно зарегестрировались')
+            messages.success(request, 'Вы успешно зарегестрировались')
             return HttpResponseRedirect(reverse('authapp:login'))
         # else:
         #     # print(form.errors)
@@ -68,23 +68,33 @@ def register(request):
     }
     return render(request, 'authapp/register.html', context)
 
+
 @login_required
 def profile(request):
     if request.method == 'POST':
-        form = UserProfilerForm(instance=request.user,data=request.POST,files=request.FILES)
-        if form.is_valid(): # даже с некорректными данными проверка успешна. Почему?
+        form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():  # даже с некорректными данными проверка успешна. Почему?
             form.save()
             messages.success(request, 'Профиль обновлен')
             return HttpResponseRedirect(reverse('authapp:profile'))
         # else:
         #     print(form.errors)
+    total_quantity = 0
+    total_sum = 0
+    baskets = Basket.objects.filter(user=request.user)
+    for basket in baskets:
+        total_quantity += basket.quantity
+        total_sum = basket.sum()
 
     context = {
         'title': 'Geeshop | Профиль',
-        'form' : UserProfilerForm(instance=request.user),
-        'baskets': Basket.objects.filter(user=request.user)
+        'form': UserProfilerForm(instance=request.user),
+        'baskets': baskets,
+        'total_quantity': total_quantity,
+        'total_sum': total_sum,
     }
     return render(request, 'authapp/profile.html', context)
+
 
 def logout(request):
     auth.logout(request)
