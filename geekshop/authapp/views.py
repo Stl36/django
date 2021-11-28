@@ -77,7 +77,7 @@ def profile(request):
             messages.success(request, 'Профиль обновлен')
             form.save()
         else:
-            messages.error(request,form.errors)
+            messages.error(request, form.errors)
 
     context = {
         'title': 'Geeshop | Профиль',
