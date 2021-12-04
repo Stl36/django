@@ -10,27 +10,47 @@ from baskets.models import Basket
 from mainapp.models import Product
 
 
+# @login_required
+# def basket_add(request, id):
+#     user_select = request.user
+#     product = Product.objects.get(id=id)
+#     baskets = Basket.objects.filter(user=user_select, product=product)
+#
+#     if baskets:
+#         basket = baskets.first()
+#         basket.quantity += 1
+#         basket.save()
+#     else:
+#         Basket.objects.create(user=user_select, product=product, quantity=1)
+#
+#     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 @login_required
 def basket_add(request, id):
-    user_select = request.user
-    product = Product.objects.get(id=id)
-    baskets = Basket.objects.filter(user=user_select, product=product)
+    if request.is_ajax():
 
-    if baskets:
-        basket = baskets.first()
-        basket.quantity += 1
-        basket.save()
-    else:
-        Basket.objects.create(user=user_select, product=product, quantity=1)
+        user_select = request.user
+        product = Product.objects.get(id=id)
+        baskets = Basket.objects.filter(user=user_select, product=product)
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        if baskets:
+            basket = baskets.first()
+            basket.quantity += 1
+            basket.save()
+        else:
+            Basket.objects.create(user=user_select, product=product, quantity=1)
+
+        products = Product.objects.all()
+        context = {'products': products}
+        result = render_to_string('mainapp/includes/card.html', context)
+        return JsonResponse({'result': result})
 
 
 @login_required
-def basket_remove(request,basket_id):
-
+def basket_remove(request, basket_id):
     Basket.objects.get(id=basket_id).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required
 def basket_edit(request, id_basket, quantity):
@@ -43,9 +63,6 @@ def basket_edit(request, id_basket, quantity):
             basket.delete()
 
         baskets = Basket.objects.filter(user=request.user)
-        context = {
-            'baskets':baskets
-        }
-        result = render_to_string('baskets/basket.html',context)
-        return JsonResponse({'result':result})
-
+        context = {'baskets': baskets}
+        result = render_to_string('baskets/basket.html', context)
+        return JsonResponse({'result': result})
