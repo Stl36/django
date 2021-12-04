@@ -82,10 +82,5 @@
 
 <!-- Footer -->
 {% block footer %}
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright GeekShop {% now "Y" %}</p>
-        </div>
-        <!-- /.container -->
-    </footer>
+    {% include 'mainapp/footer.html' %}
 {% endblock %}
