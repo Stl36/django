@@ -45,7 +45,8 @@ def admin_users_update(request, pk):
         form = UserAdminProfileForm(instance=user_select)
     context = {
         'title': 'Geekshop - Админ | Обновление',
-        'form': form
+        'form': form,
+        'user_select': user_select
     }
 
     return render(request, 'admins/admin-users-update-delete.html', context)
