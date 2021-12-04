@@ -1,10 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
 # Create your views here.
 from django.urls import reverse
 
-from admins.forms import UserAdminRegisterForm
+from admins.forms import UserAdminRegisterForm, UserAdminProfileForm
 from authapp.models import User
 
 
@@ -21,7 +20,7 @@ def admin_users(request):
 
 def admin_users_create(request):
     if request.method == 'POST':
-        form = UserAdminRegisterForm(data=request.POST,files=request.FILES)
+        form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('admins:admin_users'))
@@ -34,8 +33,22 @@ def admin_users_create(request):
     return render(request, 'admins/admin-users-create.html', context)
 
 
-def admin_users_update(request):
-    return render(request, 'admins/admin-users-update-delete.html')
+def admin_users_update(request, pk):
+    user_select = User.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = UserAdminProfileForm(instance=user_select, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admin_users'))
+    else:
+        form = UserAdminProfileForm(instance=user_select)
+    context = {
+        'title': 'Geekshop - Админ | Обновление',
+        'form': form
+    }
+
+    return render(request, 'admins/admin-users-update-delete.html', context)
 
 
 def admin_users_delete(request):
