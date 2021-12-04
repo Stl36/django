@@ -1,11 +1,13 @@
-from django.contrib import auth
+from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
 
-from authapp.forms import UserLoginForm, UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm
+from baskets.models import Basket
 
 
 def login(request):
@@ -18,16 +20,17 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('mainapp:products'))
-        else:
-            form = UserLoginForm()
-            context = {
-                'title': 'GeekShop | Авторизация',
-                'form': form,
-                'alert': True,
-            }
+            # else:
+            #     # print(form.errors)
+            #     form = UserLoginForm()
+            #     context = {
+            #         'title': 'GeekShop | Авторизация',
+            #         'form': form,
+            #         'alert': True,
+            #     }
+            #
+            # return render(request, 'authapp/login.html', context)
 
-            return render(request, 'authapp/login.html', context)
-            # print(form.errors)
     else:
         form = UserLoginForm()
 
@@ -43,17 +46,19 @@ def register(request):
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегестрировались')
             return HttpResponseRedirect(reverse('authapp:login'))
-        else:
-            form = UserRegisterForm()
-            context = {
-                'title': 'GeekShop | Регистрация',
-                'form': form,
-                'alert': True,
-            }
+        # else:
+        #     # print(form.errors)
+        #     form = UserRegisterForm()
+        #     context = {
+        #         'title': 'GeekShop | Регистрация',
+        #         'form': form,
+        #         'alert': True,
+        #     }
+        #
+        #     return render(request, 'authapp/register.html', context)
 
-            return render(request, 'authapp/register.html', context)
-            # print(form.errors)
     else:
         form = UserRegisterForm()
 
@@ -62,6 +67,27 @@ def register(request):
         'form': form
     }
     return render(request, 'authapp/register.html', context)
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            messages.set_level(request, messages.SUCCESS)
+            messages.success(request, 'Профиль обновлен')
+            form.save()
+        else:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, form.errors)
+
+    context = {
+        'title': 'Geeshop | Профиль',
+        'form': UserProfilerForm(instance=request.user),
+        'baskets': Basket.objects.filter(user=request.user),
+
+    }
+    return render(request, 'authapp/profile.html', context)
 
 
 def logout(request):
