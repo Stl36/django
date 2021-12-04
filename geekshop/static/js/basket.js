@@ -7,6 +7,8 @@ window.onload = function () {
         console.log(t_href.value)
 
 // Код ниже не отрисовывает корзину при обновлении автоматически. Почему?
+//        Ответ найден. Была ошибка в названии класса
+
         $.ajax(
             {
                 url: "/baskets/edit/" + t_href.name + "/" + t_href.value + "/",
