@@ -6,7 +6,7 @@ window.onload = function () {
         console.log(t_href.name)
         console.log(t_href.value)
 
-
+// Код ниже не отрисовывает корзину при обновлении автоматически. Почему?
         $.ajax(
             {
                 url: "/baskets/edit/" + t_href.name + "/" + t_href.value + "/",
