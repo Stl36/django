@@ -27,7 +27,8 @@ def basket_add(request, id):
 
 
 @login_required
-def basket_remove(request, basket_id):
+def basket_remove(request,basket_id):
+
     Basket.objects.get(id=basket_id).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -47,3 +48,4 @@ def basket_edit(request, id_basket, quantity):
         }
         result = render_to_string('baskets/basket.html',context)
         return JsonResponse({'result':result})
+

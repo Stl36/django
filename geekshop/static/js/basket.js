@@ -3,6 +3,10 @@ window.onload = function () {
 
         let t_href = event.target
 
+        console.log(t_href.name)
+        console.log(t_href.value)
+
+
         $.ajax(
             {
                 url: "/baskets/edit/" + t_href.name + "/" + t_href.value + "/",
