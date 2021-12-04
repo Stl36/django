@@ -16,7 +16,16 @@ def admin_users(request):
 
 
 def admin_users_create(request):
-    return render(request, 'admins/admin-users-create.html')
+    if request == 'POST':
+        form = ''
+    else:
+        form = ''
+    context = {
+        'title': 'Geekshop - Админ | Регистрация',
+        'form': form,
+
+    }
+    return render(request, 'admins/admin-users-create.html', context)
 
 
 def admin_users_update(request):
