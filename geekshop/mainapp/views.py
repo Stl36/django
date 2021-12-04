@@ -1,6 +1,8 @@
 from django.core.management.commands import loaddata
 from django.shortcuts import render
 from .models import ProductCategory, Product
+
+
 # Create your views here.
 
 
