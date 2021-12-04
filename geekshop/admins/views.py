@@ -1,6 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
+from django.urls import reverse
+
+from admins.forms import UserAdminRegisterForm
 from authapp.models import User
 
 
@@ -17,9 +21,12 @@ def admin_users(request):
 
 def admin_users_create(request):
     if request == 'POST':
-        form = ''
+        form = UserAdminRegisterForm(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admin_users'))
     else:
-        form = ''
+        form = UserAdminRegisterForm()
     context = {
         'title': 'Geekshop - Админ | Регистрация',
         'form': form,
