@@ -20,7 +20,7 @@ def admin_users(request):
 
 
 def admin_users_create(request):
-    if request == 'POST':
+    if request.method == 'POST':
         form = UserAdminRegisterForm(data=request.POST,files=request.FILES)
         if form.is_valid():
             form.save()
@@ -29,8 +29,7 @@ def admin_users_create(request):
         form = UserAdminRegisterForm()
     context = {
         'title': 'Geekshop - Админ | Регистрация',
-        'form': form,
-
+        'form': form
     }
     return render(request, 'admins/admin-users-create.html', context)
 
