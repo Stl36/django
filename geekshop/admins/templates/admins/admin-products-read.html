@@ -22,7 +22,6 @@
                                     <th>Цена</th>
                                     <th>Количество</th>
                                     <th>Категория</th>
-                                    <th>Активный</th>
                                 </tr>
                                 </thead>
 
@@ -30,7 +29,7 @@
                                 {% for product in products %}
 
                                     <tr>
-                                        <td><a href="{% url 'admins:admin_users_update' product.id %}"
+                                        <td><a href="{% url 'admins:admin_products' %}"
                                                style="color: dodgerblue">{{ product.name }}</a>
                                         </td>
                                         <td>{{ product.description }}</td>
