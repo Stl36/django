@@ -6,11 +6,11 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">Пользователи</h1>
+                <h1 class="mt-4">Товары</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
-                        Пользователи
+                        Товары
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -36,7 +36,7 @@
                                         <td>{{ product.description }}</td>
                                         <td>{{ product.price }}</td>
                                         <td>{{ product.quantity }}</td>
-                                        <td><a href="{% url 'admins:admin_categories_read' product.id %}"
+                                        <td><a href="{% url 'admins:admin_categories' %}"
                                                style="color: dodgerblue">{{ product.category }}</td>
                                     </tr>
                                 {% endfor %}
@@ -46,7 +46,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="{% url 'admins:admin_users_create' %}">
-                            <button class="btn btn-success">Создать пользователя</button>
+                            <button class="btn btn-success">Создать товар</button>
                         </a>
                     </div>
                 </div>

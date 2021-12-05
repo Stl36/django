@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from admins.forms import UserAdminRegisterForm, UserAdminProfileForm
 from authapp.models import User
-from mainapp.models import Product
+from mainapp.models import Product, ProductCategory
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -74,3 +74,10 @@ def admin_products(request):
         'products': Product.objects.all()
     }
     return render(request, 'admins/admin-products-read.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_categories(request):
+    context = {
+        'categories': ProductCategory.objects.all()
+    }
+    return render(request, 'admins/admin-categories-read.html', context)
