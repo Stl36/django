@@ -87,6 +87,21 @@ def admin_categories(request):
     return render(request, 'admins/admin-categories-read.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
+def admin_categories_create(request):
+    if request.method == 'POST':
+        form = ProductCategoryEditForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admin_categories'))
+    else:
+        form = ProductCategoryEditForm()
+    context = {
+        'title': 'Geekshop - Админ | Добавление',
+        'form': form
+    }
+    return render(request, 'admins/admin-categories-create.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
 def admin_categories_update(request, pk):
     user_select = ProductCategory.objects.get(pk=pk)
 
@@ -104,3 +119,12 @@ def admin_categories_update(request, pk):
     }
 
     return render(request, 'admins/admin-categories-update-delete.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_categories_delete(request, pk):
+    if request.method == 'POST':
+        category = ProductCategory.objects.get(pk=pk)
+        category.is_active = False
+        category.save()
+
+    return HttpResponseRedirect(reverse('admins:admin_categories'))
