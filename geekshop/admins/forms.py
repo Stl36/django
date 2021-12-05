@@ -54,5 +54,5 @@ class ProductEditForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
-            field.help_text = ''
+
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'

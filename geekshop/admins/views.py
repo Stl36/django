@@ -46,7 +46,7 @@ def admin_users_update(request, pk):
         form = UserAdminProfileForm(instance=user_select, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('admins:admin_users'))
+            return HttpResponseRedirect(reverse('admins:admin_products'))
     else:
         form = UserAdminProfileForm(instance=user_select)
     context = {
@@ -92,6 +92,35 @@ def admin_products_create(request):
         'form': form
     }
     return render(request, 'admins/admin-products-create.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_products_update(request, pk):
+    user_select = Product.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = ProductEditForm(instance=user_select, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admin_products'))
+    else:
+        form = ProductEditForm(instance=user_select)
+    context = {
+        'title': 'Geekshop - Админ | Обновление',
+        'form': form,
+        'user_select': user_select
+    }
+    return render(request, 'admins/admin-products-update-delete.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_products_delete(request, pk):
+    if request.method == 'POST':
+        category = Product.objects.get(pk=pk)
+        category.is_active = False
+        category.save()
+
+    return HttpResponseRedirect(reverse('admins:admin_categories'))
 
 
 #############################################################################################

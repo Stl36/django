@@ -30,8 +30,8 @@
                                 {% for product in products %}
 
                                     <tr>
-                                        <td><a href="{% url 'admins:admin_products' %}"
-                                               style="color: dodgerblue">{{ product.name }}</a>
+                                        <td><a href="{% url 'admins:admin_products_update' product.id %}"
+                                               style="color: dodgerblue">{{ product.name }} {{ product.id }}</a>
                                         </td>
                                         <td>{{ product.description }}</td>
                                         <td>{{ product.price }}</td>
