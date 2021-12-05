@@ -36,7 +36,7 @@
                                         <td>{{ product.description }}</td>
                                         <td>{{ product.price }}</td>
                                         <td>{{ product.quantity }}</td>
-                                        <td><a href="{% url 'admins:admin_categories' %}"
+                                        <td><a href="{% url 'admins:admin_categories_update' product.id %}"
                                                style="color: dodgerblue">{{ product.category }}</td>
                                         <td class="text-center">
                                             {% if user.is_active %}
