@@ -4,7 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from admins.forms import UserAdminRegisterForm, UserAdminProfileForm, ProductCategoryEditForm
+from admins.forms import UserAdminRegisterForm, UserAdminProfileForm, ProductCategoryEditForm, ProductEditForm
 from authapp.models import User
 from mainapp.models import Product, ProductCategory
 
@@ -67,6 +67,7 @@ def admin_users_delete(request, pk):
 
     return HttpResponseRedirect(reverse('admins:admin_users'))
 
+
 #############################################################################################
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -77,7 +78,23 @@ def admin_products(request):
     return render(request, 'admins/admin-products-read.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
+def admin_products_create(request):
+    if request.method == 'POST':
+        form = ProductEditForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admin_products'))
+    else:
+        form = ProductEditForm()
+    context = {
+        'title': 'Geekshop - Админ | Добавление',
+        'form': form
+    }
+    return render(request, 'admins/admin-products-create.html', context)
 
+
+#############################################################################################
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_categories(request):
@@ -85,6 +102,7 @@ def admin_categories(request):
         'categories': ProductCategory.objects.all()
     }
     return render(request, 'admins/admin-categories-read.html', context)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_categories_create(request):
@@ -100,6 +118,7 @@ def admin_categories_create(request):
         'form': form
     }
     return render(request, 'admins/admin-categories-create.html', context)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_categories_update(request, pk):
@@ -119,6 +138,7 @@ def admin_categories_update(request, pk):
     }
 
     return render(request, 'admins/admin-categories-update-delete.html', context)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_categories_delete(request, pk):
