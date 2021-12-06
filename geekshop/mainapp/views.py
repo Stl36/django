@@ -1,8 +1,9 @@
-from django.core.management.commands import loaddata
-from django.shortcuts import render
-from .models import ProductCategory, Product
 import os
+
+from django.shortcuts import render
 from django.views.generic import DetailView
+
+from .models import ProductCategory, Product
 
 MODULE_DIR = os.path.dirname(__file__)
 
@@ -17,13 +18,16 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request):
+def products(request, id_category=None):
     products = Product.objects.all()
     context = {
         'title': 'GeekShop | Каталог',
         'products': products,
-        'categories': ProductCategory.objects.all(),
     }
+    if id_category:
+        context['categories'] = ProductCategory.objects.filter(id=id_category)
+    else:
+        context['categories'] = ProductCategory.objects.all()
     return render(request, 'mainapp/products.html', context)
 
 
