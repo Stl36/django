@@ -17,8 +17,11 @@
                 <h1 class="my-4">GeekShop</h1>
                 <div class="list-group">
                     {% for category in categories %}
-                        <a href="#" class="list-group-item">{{ category.name }}</a>
+                        <a href="{% url 'mainapp:category' category.id %}"
+                           class="list-group-item">{{ category.name }}</a>
                     {% endfor %}
+                    <a href={% url 'mainapp:category' 0 %}#"
+                           class="list-group-item">Все товары</a>
                 </div>
 
             </div>
@@ -56,7 +59,7 @@
                     </a>
                 </div>
 
-                    {% include 'mainapp/includes/card.html'%}
+                {% include 'mainapp/includes/card.html' %}
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">

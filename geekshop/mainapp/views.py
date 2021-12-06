@@ -22,12 +22,13 @@ def products(request, id_category=None):
     products = Product.objects.all()
     context = {
         'title': 'GeekShop | Каталог',
-        'products': products,
     }
     if id_category:
-        context['categories'] = ProductCategory.objects.filter(id=id_category)
+        context['products'] = Product.objects.filter(category_id=id_category)
     else:
-        context['categories'] = ProductCategory.objects.all()
+        context['products'] = Product.objects.all()
+    context['categories'] = ProductCategory.objects.all()
+
     return render(request, 'mainapp/products.html', context)
 
 
