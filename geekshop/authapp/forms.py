@@ -1,8 +1,10 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+import hashlib
+import random
+
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 
 from authapp.models import User
-from authapp.validator import validate_name
 
 
 class UserLoginForm(AuthenticationForm):
@@ -10,12 +12,13 @@ class UserLoginForm(AuthenticationForm):
         model = User
         fields = ('username', 'password')
 
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользлователя'
-        self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+
+def __init__(self, *args, **kwargs):
+    super(UserLoginForm, self).__init__(*args, **kwargs)
+    self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
+    self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
+    for field_name, field in self.fields.items():
+        field.widget.attrs['class'] = 'form-control py-4'
 
 
 class UserRegisterForm(UserCreationForm):
@@ -25,20 +28,25 @@ class UserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользлователя'
-        self.fields['email'].widget.attrs['placeholder'] = 'Введите email'
-        self.fields['first_name'].widget.attrs['placeholder'] = 'Введите Имя'
-        self.fields['last_name'].widget.attrs['placeholder'] = 'Введите Фамилию'
+        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
+        self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес эл.почты'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Введите  имя'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Введите  фамилию'
         self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
         self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
-
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
+    def save(self, commit=True):
+        user = super(UserRegisterForm, self).save()
+        user.is_active = False
+        salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+        user.save()
+        return user
+
 
 class UserProfilerForm(UserChangeForm):
-    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
-
     image = forms.ImageField(widget=forms.FileInput(), required=False)
     age = forms.IntegerField(widget=forms.NumberInput(), required=False)
 

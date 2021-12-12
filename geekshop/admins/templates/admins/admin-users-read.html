@@ -1,8 +1,6 @@
 {% extends 'admins/base.html' %}
-{#{% load static %}#}
 
 {% block content %}
-
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
@@ -27,12 +25,10 @@
                                 </thead>
 
                                 <tbody>
-                                {% for user in users %}
-
+                                {% for user in object_list %}
                                     <tr>
                                         <td><a href="{% url 'admins:admin_users_update' user.id %}"
-                                               style="color: dodgerblue">{{ user.username }}</a>
-                                        </td>
+                                               style="color: dodgerblue">{{ user.username }}</a></td>
                                         <td>{{ user.first_name }}</td>
                                         <td>{{ user.last_name }}</td>
                                         <td>{{ user.email }}</td>
@@ -45,13 +41,14 @@
 
                                         </td>
 
+
                                         <td class="text-center">
+
                                             {% if user.is_active %}
                                                 <i class="fas fa-check-circle"></i>
                                             {% else %}
                                                 <i class="fas fa-times-circle"></i>
                                             {% endif %}
-
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -75,5 +72,4 @@
             </div>
         </footer>
     </div>
-
 {% endblock %}
