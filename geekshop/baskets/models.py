@@ -1,9 +1,7 @@
-from django.db import models
-
 # Create your models here.
 from authapp.models import User
+from django.db import models
 from mainapp.models import Product
-
 
 
 class Basket(models.Model):
@@ -27,5 +25,3 @@ class Basket(models.Model):
     def total_quantity(self):
         baskets = Basket.objects.filter(user=self.user)
         return sum(basket.quantity for basket in baskets)
-
-
