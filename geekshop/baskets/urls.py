@@ -13,4 +13,5 @@ urlpatterns = [
     path('remove/<int:basket_id>', basket_remove, name='basket_remove'),
     path('edit/<int:id_basket>/<int:quantity>/', basket_edit, name='basket_edit'),
 
+
 ]

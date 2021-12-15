@@ -1,13 +1,16 @@
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
 from django.template.loader import render_to_string
+
 from django.urls import reverse
 
 from baskets.models import Basket
 from mainapp.models import Product
+
 
 
 # @login_required
@@ -66,3 +69,4 @@ def basket_edit(request, id_basket, quantity):
         context = {'baskets': baskets}
         result = render_to_string('baskets/basket.html', context)
         return JsonResponse({'result': result})
+
