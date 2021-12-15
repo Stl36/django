@@ -19,7 +19,3 @@ class User(AbstractUser):
         if now() <= self.activation_key_expires + timedelta(hours=48):
             return False
         return True
-
-
-
-
