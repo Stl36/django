@@ -90,5 +90,3 @@ class ProfileFormView(UpdateView,BaseClassContextMixin,UserDispatchMixin):
 
 class Logout(LogoutView):
     template_name = "mainapp/index.html"
-
-
